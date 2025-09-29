@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyyaml = "*"
+requests = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12.8"
+
+[scripts]
+scan = "python src/main.py"

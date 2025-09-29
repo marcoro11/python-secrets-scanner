@@ -1,0 +1,102 @@
+rules:
+  # Custom API Key Patterns
+  - id: "custom-api-key-1"
+    name: "Custom API Key Pattern"
+    description: "Custom API key pattern for internal services"
+    pattern: 'CUSTOM_API_KEY_[A-Za-z0-9]{32}'
+    severity: "high"
+    confidence: 0.9
+    enabled: true
+    tags:
+      - "api-key"
+      - "custom"
+  # Internal Database Credentials
+  - id: "internal-db-creds"
+    name: "Internal Database Credentials"
+    description: "Internal database connection strings"
+    pattern: "(dev|test|prod)_db_password\\s*=\\s*[\"']?([^\"'\\s]{8,})[\"']?"
+    severity: "critical"
+    confidence: 0.95
+    enabled: true
+    tags:
+      - "database"
+      - "credentials"
+    false_positive_patterns:
+      - "password\\s*=\\s*[\"']?(null|none|empty|todo|fixme|placeholder)[\"']?"
+  # SSH Private Key Files
+  - id: "ssh-key-file"
+    name: "SSH Private Key File Reference"
+    description: "Reference to SSH private key files"
+    pattern: '(id_rsa|id_dsa|id_ecdsa|id_ed25519)(?!\.pub)'
+    severity: "medium"
+    confidence: 0.7
+    enabled: true
+    tags:
+      - "ssh"
+      - "private-key"
+  # Docker Registry Credentials
+  - id: "docker-registry-auth"
+    name: "Docker Registry Authentication"
+    description: "Docker registry authentication tokens"
+    pattern: '"auth":\s*"[A-Za-z0-9+/=]{20,}"'
+    severity: "high"
+    confidence: 0.9
+    enabled: true
+    tags:
+      - "docker"
+      - "registry"
+  # Webhook URLs with tokens
+  - id: "webhook-url-token"
+    name: "Webhook URL with Token"
+    description: "Webhook URLs containing authentication tokens"
+    pattern: 'https://hooks\.slack\.com/services/T[A-Z0-9]{8}/B[A-Z0-9]{8}/[A-Za-z0-9]{24}'
+    severity: "medium"
+    confidence: 0.9
+    enabled: true
+    tags:
+      - "webhook"
+      - "slack"
+  # Certificate Files
+  - id: "certificate-file"
+    name: "Certificate File"
+    description: "Certificate file content"
+    pattern: '-----BEGIN CERTIFICATE-----'
+    severity: "low"
+    confidence: 1.0
+    enabled: true
+    tags:
+      - "certificate"
+      - "crypto"
+  # FTP Credentials
+  - id: "ftp-credentials"
+    name: "FTP Credentials"
+    description: "FTP username and password"
+    pattern: 'ftp://[^:]+:[^@]+@[^/]+'
+    severity: "medium"
+    confidence: 0.8
+    enabled: true
+    tags:
+      - "ftp"
+      - "credentials"
+  # Email Service API Keys
+  - id: "email-service-key"
+    name: "Email Service API Key"
+    description: "Email service API keys"
+    pattern: "(mailgun|sendgrid|mandrill)_api_key\\s*[:=]\\s*[\"']?([A-Za-z0-9_\\-]{20,})[\"']?"
+    severity: "high"
+    confidence: 0.9
+    enabled: true
+    tags:
+      - "email"
+      - "api-key"
+  # Payment Gateway Keys
+  - id: "payment-gateway-key"
+    name: "Payment Gateway Key"
+    description: "Payment gateway API keys"
+    pattern: "(stripe|paypal|square)_[a-z]+_key\\s*[:=]\\s*[\"']?([A-Za-z0-9_\\-]{20,})[\"']?"
+    severity: "critical"
+    confidence: 0.95
+    enabled: true
+    tags:
+      - "payment"
+      - "api-key"
